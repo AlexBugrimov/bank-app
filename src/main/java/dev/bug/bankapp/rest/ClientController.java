@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("clients")
+@RequestMapping(value = "/api/clients",
+        consumes = "application/json",
+        produces = "application/json")
 public class ClientController {
 
     @Autowired
@@ -23,7 +25,7 @@ public class ClientController {
         if (!clientRepository.findByName(client.getName()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(clientRepository.save(client));
         }
-        throw new ClientExistsException();
+        throw new ClientExistsException("Client '" + client.getName() + "' Exists");
     }
 
     @GetMapping("all-names")
