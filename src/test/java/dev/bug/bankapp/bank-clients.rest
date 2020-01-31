@@ -25,3 +25,9 @@ Content-Type: application/json
 %}
 
 ###
+
+GET {{client_api}}/contains/Super
+Accept: application/json
+Content-Type: application/json
+
+###

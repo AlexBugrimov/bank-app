@@ -42,9 +42,9 @@ public class ClientController {
         return client.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("{name}")
-    public ResponseEntity<List<Client>> getClientsByNameLike(@PathVariable String name) {
-        List<Client> clients = clientRepository.findAllByNameLike(name);
-        return ResponseEntity.ok(clients);
+    @GetMapping("contains/{name}")
+    public ResponseEntity<List<Client>> getClientsByNameContains(@PathVariable String name) {
+        List<Client> clients = clientRepository.findAllByNameContains(name);
+        return clients.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(clients);
     }
 }

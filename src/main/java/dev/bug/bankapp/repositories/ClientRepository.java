@@ -13,5 +13,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @Query("select c.name from Client c")
     List<String> findAllNamesClients();
 
-    List<Client> findAllByNameLike(String name);
+    List<Client> findAllByNameContains(String name);
 }
