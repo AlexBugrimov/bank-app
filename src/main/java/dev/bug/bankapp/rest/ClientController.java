@@ -22,20 +22,29 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<Client> addClient(@RequestBody Client client) {
-        if (!clientRepository.findByName(client.getName()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(clientRepository.save(client));
+        if (!clientRepository.existsById(client.getClientId())) {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(clientRepository.save(client));
         }
         throw new ClientExistsException("Client '" + client.getName() + "' Exists");
     }
 
     @GetMapping("all-names")
     public ResponseEntity<List<String>> getNamesAllClients() {
-        return ResponseEntity.ok(clientRepository.findAllNamesClients());
+        List<String> names = clientRepository.findAllNamesClients();
+        return ResponseEntity.ok(names);
     }
 
     @GetMapping("{name}")
     public ResponseEntity<Client> getClientByName(@PathVariable String name) {
         Optional<Client> client = clientRepository.findByName(name);
         return client.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("{name}")
+    public ResponseEntity<List<Client>> getClientsByNameLike(@PathVariable String name) {
+        List<Client> clients = clientRepository.findAllByNameLike(name);
+        return ResponseEntity.ok(clients);
     }
 }

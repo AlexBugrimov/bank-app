@@ -19,7 +19,7 @@ public class AccountHistory {
     @GeneratedValue
     private long accountHistoryId;
 
-    @OneToOne
+    @ManyToOne
     private Account account;
 
     @Enumerated(EnumType.STRING)
@@ -31,6 +31,6 @@ public class AccountHistory {
 
     private double balanceAfter;
 
-    @OneToOne
+    @ManyToOne
     private Account transferFrom;
 }

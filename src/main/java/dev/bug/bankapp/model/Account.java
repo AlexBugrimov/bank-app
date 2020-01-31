@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,11 +22,11 @@ public class Account {
 
     private double balance;
 
-    @OneToOne(mappedBy = "account")
-    private AccountHistory accountHistory;
+    @OneToMany(mappedBy = "account")
+    private List<AccountHistory> accountHistories;
 
-    @OneToOne(mappedBy = "transferFrom")
-    private AccountHistory accountHistoryTransferFrom;
+    @OneToMany(mappedBy = "transferFrom")
+    private List<AccountHistory> accountHistoriesTransferFrom;
 
     public void deposit(double amount) {
         this.balance += amount;
