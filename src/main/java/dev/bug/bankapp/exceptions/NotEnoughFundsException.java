@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotEnoughFundsException extends BankException {
+public class NotEnoughFundsException extends RuntimeException {
 
     private long id;
     private double balance;
