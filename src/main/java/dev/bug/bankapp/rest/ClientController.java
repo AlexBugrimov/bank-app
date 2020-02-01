@@ -1,10 +1,8 @@
 package dev.bug.bankapp.rest;
 
-import dev.bug.bankapp.exceptions.ClientExistsException;
+import dev.bug.bankapp.dto.ClientDto;
+import dev.bug.bankapp.exceptions.ClientNotFoundException;
 import dev.bug.bankapp.model.Client;
-import dev.bug.bankapp.repositories.ClientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,39 +10,29 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/clients",
+@RequestMapping(value = "clients",
         consumes = "application/json",
         produces = "application/json")
-public class ClientController {
-
-    @Autowired
-    private ClientRepository clientRepository;
-
-    @PostMapping
-    public ResponseEntity<Client> addClient(@RequestBody Client client) {
-        if (!clientRepository.existsById(client.getClientId())) {
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(clientRepository.save(client));
-        }
-        throw new ClientExistsException("Client '" + client.getName() + "' Exists");
-    }
-
-    @GetMapping("all-names")
-    public ResponseEntity<List<String>> getNamesAllClients() {
-        List<String> names = clientRepository.findAllNamesClients();
-        return ResponseEntity.ok(names);
-    }
+public class ClientController extends ApiController {
 
     @GetMapping("{name}")
-    public ResponseEntity<Client> getClientByName(@PathVariable String name) {
-        Optional<Client> client = clientRepository.findByName(name);
-        return client.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ClientDto> getClientByName(@PathVariable String name) {
+        if(clientRepository.existsByName(name)) {
+            ClientDto clientDto = mapper.clientTo(clientRepository.findByName(name));
+            return ResponseEntity.ok(clientDto);
+        }
+        throw new ClientNotFoundException(messageProvider, name);
     }
 
-    @GetMapping("contains/{name}")
-    public ResponseEntity<List<Client>> getClientsByNameContains(@PathVariable String name) {
+    @GetMapping("search")
+    public ResponseEntity<List<ClientDto>> searchClientsByName(@RequestParam String name) {
         List<Client> clients = clientRepository.findAllByNameContains(name);
-        return clients.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(clients);
+        if (clients != null || !clients.isEmpty()) {
+
+        }
+        List<ClientDto> clientsDto = mapper.clientsTo(clients);
+        return clientsDto.isEmpty() ?
+                ResponseEntity.notFound().build() :
+                ResponseEntity.ok(clientsDto);
     }
 }

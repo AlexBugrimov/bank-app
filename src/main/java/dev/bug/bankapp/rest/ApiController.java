@@ -1,6 +1,6 @@
 package dev.bug.bankapp.rest;
 
-import dev.bug.bankapp.exceptions.ErrorMessageProvider;
+import dev.bug.bankapp.utils.ErrorMessageProvider;
 import dev.bug.bankapp.repositories.BankRepository;
 import dev.bug.bankapp.repositories.ClientRepository;
 import dev.bug.bankapp.utils.Mapper;

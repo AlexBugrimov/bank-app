@@ -1,10 +1,10 @@
 package dev.bug.bankapp.exceptions;
 
-import static dev.bug.bankapp.utils.FormattedText.text;
+import dev.bug.bankapp.utils.ErrorMessageProvider;
 
 public class ClientExistsException extends BankException {
 
     public ClientExistsException(ErrorMessageProvider errorMessageProvider, String clientName) {
-        super(text(errorMessageProvider.getClientExists(), clientName));
+        super(errorMessageProvider.getClientExists(), clientName);
     }
 }

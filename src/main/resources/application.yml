@@ -20,3 +20,11 @@ spring:
 
 server:
   port: 8888
+  servlet:
+    context-path: /api/v1
+
+error-messages:
+  bankNotExists: Банка с id:{0} не существует
+  clientExists: Клиент с именем {0} уже зарегистрирован в банке
+  clientNotFound: Клиент с именем {0} не найден
+  inBankNotFoundClients: В банке с id:{0} нет клиентов

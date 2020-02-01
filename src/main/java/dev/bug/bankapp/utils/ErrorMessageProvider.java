@@ -1,4 +1,4 @@
-package dev.bug.bankapp.exceptions;
+package dev.bug.bankapp.utils;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -11,4 +11,6 @@ public class ErrorMessageProvider {
 
     private String bankNotExists;
     private String clientExists;
+    private String clientNotFound;
+    private String inBankNotFoundClients;
 }
