@@ -19,7 +19,7 @@ spring:
     use-hal-as-default-json-media-type: false
 
 server:
-  port: 8888
+  port: 8889
   servlet:
     context-path: /api/v1
 
@@ -28,3 +28,5 @@ error-messages:
   clientExists: Клиент с именем {0} уже зарегистрирован в банке
   clientNotFound: Клиент с именем {0} не найден
   inBankNotFoundClients: В банке с id:{0} нет клиентов
+  notEnoughFunds: Не удалось снять со счета {0} {1} рублей тaк как недостаточно средств
+  accountNotFound: Счет с номером {0} не найден

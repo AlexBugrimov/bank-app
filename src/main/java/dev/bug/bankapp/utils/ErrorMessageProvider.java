@@ -13,4 +13,6 @@ public class ErrorMessageProvider {
     private String clientExists;
     private String clientNotFound;
     private String inBankNotFoundClients;
+    private String notEnoughFunds;
+    private String accountNotFound;
 }

@@ -1,14 +1,13 @@
 package dev.bug.bankapp.exceptions;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import dev.bug.bankapp.utils.ErrorMessageProvider;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-@AllArgsConstructor
-@NoArgsConstructor
-public class NotEnoughFundsException extends RuntimeException {
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class NotEnoughFundsException extends BankException {
 
-    private long id;
-    private double balance;
-    private double amount;
-
+    public NotEnoughFundsException(ErrorMessageProvider messageProvider, String accountNumber, double amount) {
+        super(messageProvider.getNotEnoughFunds(), accountNumber, amount);
+    }
 }

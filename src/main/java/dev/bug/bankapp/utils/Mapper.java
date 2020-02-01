@@ -1,7 +1,9 @@
 package dev.bug.bankapp.utils;
 
+import dev.bug.bankapp.dto.AccountDto;
 import dev.bug.bankapp.dto.BankDto;
 import dev.bug.bankapp.dto.ClientDto;
+import dev.bug.bankapp.model.Account;
 import dev.bug.bankapp.model.Bank;
 import dev.bug.bankapp.model.Client;
 import org.springframework.stereotype.Component;
@@ -24,8 +26,21 @@ public class Mapper {
                 .collect(Collectors.toList());
     }
 
-    private BankDto bankTo(Bank bank) {
+    public List<AccountDto> accountsTo(List<Account> accounts) {
+        return accounts.stream()
+                .map(this::accountTo)
+                .collect(Collectors.toList());
+    }
+
+    public BankDto bankTo(Bank bank) {
         return new BankDto()
                 .setBankId(bank.getBankId());
+    }
+
+    public AccountDto accountTo(Account account) {
+        return new AccountDto()
+                .setAccountNumber(account.getAccountNumber())
+                .setBalance(account.getBalance())
+                .setClient(clientTo(account.getClient()));
     }
 }

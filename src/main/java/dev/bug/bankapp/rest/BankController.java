@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
 @Transactional
+@RestController
 @RequestMapping(value = "banks", consumes = "application/json")
 public class BankController extends ApiController {
 
