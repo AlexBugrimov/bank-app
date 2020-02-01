@@ -3,11 +3,13 @@ package dev.bug.bankapp.utils;
 import dev.bug.bankapp.dto.AccountDto;
 import dev.bug.bankapp.dto.BankDto;
 import dev.bug.bankapp.dto.ClientDto;
+import dev.bug.bankapp.dto.TransferDto;
 import dev.bug.bankapp.model.Account;
 import dev.bug.bankapp.model.Bank;
 import dev.bug.bankapp.model.Client;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,5 +44,13 @@ public class Mapper {
                 .setAccountNumber(account.getAccountNumber())
                 .setBalance(account.getBalance())
                 .setClient(clientTo(account.getClient()));
+    }
+
+    public TransferDto transferTo(Account creditAccount, Account debitedAccount, double amount) {
+        return new TransferDto()
+                .setAmount(amount)
+                .setDateTime(LocalDateTime.now())
+                .setCreditAccount(accountTo(creditAccount))
+                .setDebitedAccount(accountTo(debitedAccount));
     }
 }

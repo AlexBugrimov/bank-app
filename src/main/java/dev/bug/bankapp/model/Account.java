@@ -1,7 +1,10 @@
 package dev.bug.bankapp.model;
 
+import dev.bug.bankapp.exceptions.NotEnoughFundsException;
+import dev.bug.bankapp.utils.ErrorMessageProvider;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.List;
@@ -28,11 +31,13 @@ public class Account {
     @OneToMany(mappedBy = "transferFrom")
     private List<AccountHistory> accountHistoriesTransferFrom;
 
-    public void deposit(double amount) {
+    public Account deposit(double amount) {
         this.balance += amount;
+        return this;
     }
 
-    public void withdraw(double amount) {
+    public Account withdraw(double amount) {
         this.balance -= amount;
+        return this;
     }
 }
