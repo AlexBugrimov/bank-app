@@ -60,4 +60,13 @@ public class ClientController extends ApiController {
         }
         throw new ClientNotFoundException(messageProvider, name);
     }
+
+    @DeleteMapping("{name}")
+    public ResponseEntity<Void> deleteClient(@PathVariable String name) {
+        if (clientRepository.existsByName(name)) {
+            clientRepository.deleteByName(name);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        throw new ClientNotFoundException(messageProvider, name);
+    }
 }
