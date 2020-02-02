@@ -3,9 +3,9 @@ package dev.bug.bankapp.rest.requests;
 import lombok.Data;
 
 @Data
-public class MoneyTransfer {
+public class Transfer {
 
     private String creditAccountNumber;
-    private String debitingAccountNumber;
+    private String debitAccountNumber;
     private double amount;
 }

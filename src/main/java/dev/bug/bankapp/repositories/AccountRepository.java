@@ -12,4 +12,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     boolean existsByAccountNumber(String accountNumber);
 
     Account findByAccountNumber(String accountNumber);
+
+    void deleteByAccountNumber(String accountNumber);
 }
