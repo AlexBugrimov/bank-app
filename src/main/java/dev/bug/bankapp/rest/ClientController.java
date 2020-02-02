@@ -5,11 +5,13 @@ import dev.bug.bankapp.dto.ClientDto;
 import dev.bug.bankapp.exceptions.ClientNotFoundException;
 import dev.bug.bankapp.model.Account;
 import dev.bug.bankapp.model.Client;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Transactional
 @RestController
@@ -40,5 +42,22 @@ public class ClientController extends ApiController {
         List<Account> accounts = accountRepository.findAllByClientName(name);
         List<AccountDto> accountsDto = mapper.accountsTo(accounts);
         return ResponseEntity.ok(accountsDto);
+    }
+
+    @PostMapping("{name}/add-account")
+    public ResponseEntity<AccountDto> addAccount(@PathVariable String name) {
+        if (clientRepository.existsByName(name)) {
+            Client client = clientRepository.findByName(name);
+            Account account = new Account()
+                    .setAccountNumber(UUID.randomUUID().toString())
+                    .setClient(client)
+                    .setBalance(0.0);
+            Account newAccount = accountRepository.save(account);
+            client.addAccount(newAccount);
+            clientRepository.save(client);
+            AccountDto accountDto = mapper.accountTo(newAccount);
+            return ResponseEntity.status(HttpStatus.CREATED).body(accountDto);
+        }
+        throw new ClientNotFoundException(messageProvider, name);
     }
 }
