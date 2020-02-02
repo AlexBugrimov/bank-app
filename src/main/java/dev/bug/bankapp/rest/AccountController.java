@@ -1,11 +1,14 @@
 package dev.bug.bankapp.rest;
 
 import dev.bug.bankapp.dto.AccountDto;
+import dev.bug.bankapp.dto.ClientDto;
 import dev.bug.bankapp.dto.TransferDto;
 import dev.bug.bankapp.exceptions.AccountNotFoundException;
 import dev.bug.bankapp.exceptions.NotEnoughFundsException;
 import dev.bug.bankapp.model.Account;
 import dev.bug.bankapp.rest.requests.Transfer;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController extends ApiController {
 
     @PostMapping("withdraw")
+    @ApiOperation(value = "Списание со счета", response = AccountDto.class)
     public ResponseEntity<AccountDto> moneyWithdrawingFromAccount(@RequestBody Transfer transfer) {
         String accountNumber = transfer.getCreditAccountNumber();
         Account account = getAnExistingAccount(accountNumber);
@@ -30,6 +34,7 @@ public class AccountController extends ApiController {
     }
 
     @PostMapping("transfer")
+    @ApiOperation(value = "Перевод со счета на счет", response = TransferDto.class)
     public ResponseEntity<TransferDto> moneyTransferBetweenAccounts(@RequestBody Transfer transfer) {
         String creditAccountNumber = transfer.getCreditAccountNumber();
         Account creditAccount = getAnExistingAccount(creditAccountNumber);
@@ -49,6 +54,7 @@ public class AccountController extends ApiController {
     }
 
     @PostMapping("deposit")
+    @ApiOperation(value = "Пополнение счета", response = AccountDto.class)
     public ResponseEntity<AccountDto> moneyDepositToAccount(@RequestBody Transfer transfer) {
         String accountNumber = transfer.getDebitAccountNumber();
         Account account = getAnExistingAccount(accountNumber);
@@ -59,7 +65,10 @@ public class AccountController extends ApiController {
     }
 
     @DeleteMapping("{accountNumber}")
-    public ResponseEntity<Void> deleteAccount(@PathVariable String accountNumber) {
+    @ApiOperation(value = "Удаление счета")
+    public ResponseEntity<Void> deleteAccount(
+            @ApiParam(value = "Номер счета", required = true, example = "3ab76c49-c252-45d9-a0e3-ff0ee3a2221e")
+            @PathVariable String accountNumber) {
         if (accountRepository.existsByAccountNumber(accountNumber)) {
             accountRepository.deleteByAccountNumber(accountNumber);
             return ResponseEntity.noContent().build();

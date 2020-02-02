@@ -14,4 +14,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findAllByNameContains(String name);
 
     List<Client> findClientsByBankBankId(long bankId);
+
+    void deleteByName(String name);
 }

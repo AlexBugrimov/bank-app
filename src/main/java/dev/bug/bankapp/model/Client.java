@@ -1,5 +1,6 @@
 package dev.bug.bankapp.model;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@ApiModel(value = "Client", description = "Клиент")
 public class Client {
 
     @Id

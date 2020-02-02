@@ -6,6 +6,8 @@ import dev.bug.bankapp.exceptions.ClientExistsException;
 import dev.bug.bankapp.exceptions.InBankNotFoundClientsException;
 import dev.bug.bankapp.model.Bank;
 import dev.bug.bankapp.model.Client;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Api("Банк")
 @Transactional
 @RestController
 @RequestMapping(value = "banks", consumes = "application/json")
 public class BankController extends ApiController {
 
     @PostMapping
+    @ApiOperation(value = "Создание банка", response = Bank.class)
     public ResponseEntity<Bank> createBank() {
         Bank bank = bankRepository.save(new Bank());
         return ResponseEntity
@@ -28,6 +32,7 @@ public class BankController extends ApiController {
     }
 
     @PostMapping("{bankId}")
+    @ApiOperation(value = "Добавление клиента", response = ClientDto.class)
     public ResponseEntity<ClientDto> addClient(@PathVariable long bankId,
                                                @RequestBody Client client) {
         if (!bankRepository.existsById(bankId)) {
@@ -45,6 +50,7 @@ public class BankController extends ApiController {
     }
 
     @GetMapping("/{bankId}/clients-names")
+    @ApiOperation(value = "Получение списка имен клиентов по bankId", response = List.class)
     public ResponseEntity<List<String>> getClientsNamesByBankId(@PathVariable long bankId) {
         if (!bankRepository.existsById(bankId)) {
             throw new BankNotExistsException(messageProvider, bankId);
