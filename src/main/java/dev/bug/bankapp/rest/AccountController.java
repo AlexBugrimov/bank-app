@@ -1,7 +1,6 @@
 package dev.bug.bankapp.rest;
 
 import dev.bug.bankapp.dto.AccountDto;
-import dev.bug.bankapp.dto.ClientDto;
 import dev.bug.bankapp.dto.TransferDto;
 import dev.bug.bankapp.exceptions.AccountNotFoundException;
 import dev.bug.bankapp.exceptions.NotEnoughFundsException;
@@ -20,7 +19,7 @@ public class AccountController extends ApiController {
 
     @PostMapping("withdraw")
     @ApiOperation(value = "Списание со счета", response = AccountDto.class)
-    public ResponseEntity<AccountDto> moneyWithdrawingFromAccount(@RequestBody Transfer transfer) {
+    public ResponseEntity<AccountDto> withdraw(@RequestBody Transfer transfer) {
         String accountNumber = transfer.getCreditAccountNumber();
         Account account = getAnExistingAccount(accountNumber);
 
@@ -35,7 +34,7 @@ public class AccountController extends ApiController {
 
     @PostMapping("transfer")
     @ApiOperation(value = "Перевод со счета на счет", response = TransferDto.class)
-    public ResponseEntity<TransferDto> moneyTransferBetweenAccounts(@RequestBody Transfer transfer) {
+    public ResponseEntity<TransferDto> transfer(@RequestBody Transfer transfer) {
         String creditAccountNumber = transfer.getCreditAccountNumber();
         Account creditAccount = getAnExistingAccount(creditAccountNumber);
         double amount = transfer.getAmount();
@@ -55,7 +54,7 @@ public class AccountController extends ApiController {
 
     @PostMapping("deposit")
     @ApiOperation(value = "Пополнение счета", response = AccountDto.class)
-    public ResponseEntity<AccountDto> moneyDepositToAccount(@RequestBody Transfer transfer) {
+    public ResponseEntity<AccountDto> deposit(@RequestBody Transfer transfer) {
         String accountNumber = transfer.getDebitAccountNumber();
         Account account = getAnExistingAccount(accountNumber);
         double amount = transfer.getAmount();

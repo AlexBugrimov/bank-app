@@ -49,8 +49,7 @@ public class Mapper {
     public TransferDto transferTo(Account creditAccount, Account debitedAccount, double amount) {
         return new TransferDto()
                 .setAmount(amount)
-                .setDateTime(LocalDateTime.now())
                 .setCreditAccount(accountTo(creditAccount))
-                .setDebitedAccount(accountTo(debitedAccount));
+                .setDebitAccount(accountTo(debitedAccount));
     }
 }
