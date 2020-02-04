@@ -1,5 +1,6 @@
 package dev.bug.bankapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class Client {
     private List<Account> accounts = new ArrayList<>();
 
     @ManyToOne
+    @JsonIgnoreProperties("bank_id")
     private Bank bank;
 
     public Client(String name) {

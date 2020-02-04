@@ -1,5 +1,6 @@
 package dev.bug.bankapp.rest;
 
+import dev.bug.bankapp.repositories.AccountHistoryRepository;
 import dev.bug.bankapp.repositories.AccountRepository;
 import dev.bug.bankapp.repositories.BankRepository;
 import dev.bug.bankapp.repositories.ClientRepository;
@@ -19,6 +20,9 @@ public abstract class ApiController {
 
     @Autowired
     protected AccountRepository accountRepository;
+
+    @Autowired
+    protected AccountHistoryRepository accountHistoryRepository;
 
     @Autowired
     protected ErrorMessageProvider messageProvider;

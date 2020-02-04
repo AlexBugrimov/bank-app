@@ -1,10 +1,7 @@
 package dev.bug.bankapp.model;
 
-import dev.bug.bankapp.exceptions.NotEnoughFundsException;
-import dev.bug.bankapp.utils.ErrorMessageProvider;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.List;

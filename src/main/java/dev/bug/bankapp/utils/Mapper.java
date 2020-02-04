@@ -1,15 +1,12 @@
 package dev.bug.bankapp.utils;
 
-import dev.bug.bankapp.dto.AccountDto;
-import dev.bug.bankapp.dto.BankDto;
-import dev.bug.bankapp.dto.ClientDto;
-import dev.bug.bankapp.dto.TransferDto;
+import dev.bug.bankapp.dto.*;
 import dev.bug.bankapp.model.Account;
+import dev.bug.bankapp.model.AccountHistory;
 import dev.bug.bankapp.model.Bank;
 import dev.bug.bankapp.model.Client;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +14,7 @@ import java.util.stream.Collectors;
 public class Mapper {
 
     public ClientDto clientTo(Client client) {
-        return new ClientDto()
+        return (client == null) ? null : new ClientDto()
                 .setName(client.getName())
                 .setBank(bankTo(client.getBank()));
     }
@@ -40,7 +37,7 @@ public class Mapper {
     }
 
     public AccountDto accountTo(Account account) {
-        return new AccountDto()
+        return (account == null) ? null : new AccountDto()
                 .setAccountNumber(account.getAccountNumber())
                 .setBalance(account.getBalance())
                 .setClient(clientTo(account.getClient()));
@@ -51,5 +48,21 @@ public class Mapper {
                 .setAmount(amount)
                 .setCreditAccount(accountTo(creditAccount))
                 .setDebitAccount(accountTo(debitedAccount));
+    }
+
+    public List<AccountHistoryDto> accountHistoriesTo(List<AccountHistory> accountHistories) {
+        return accountHistories.stream()
+                .map(this::accountHistoryTo)
+                .collect(Collectors.toList());
+    }
+
+    private AccountHistoryDto accountHistoryTo(AccountHistory accountHistory) {
+        return (accountHistory == null) ? null : new AccountHistoryDto()
+                .setAccount(accountTo(accountHistory.getAccount()))
+                .setBalanceBefore(accountHistory.getBalanceBefore())
+                .setBalanceAfter(accountHistory.getBalanceAfter())
+                .setOperation(accountHistory.getOperation())
+                .setTime(accountHistory.getTime())
+                .setTransferFrom(accountTo(accountHistory.getTransferFrom()));
     }
 }
