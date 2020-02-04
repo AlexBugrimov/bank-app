@@ -4,6 +4,7 @@ import dev.bug.bankapp.dto.AccountHistoryDto;
 import dev.bug.bankapp.model.AccountHistory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import java.util.List;
 public class AccountHistoryController extends ApiController {
 
     @GetMapping
+    @Transactional
     public ResponseEntity<List<AccountHistoryDto>> getAccountHistoryReport(
             @RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate from,
             @RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate to) {
