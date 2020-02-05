@@ -2,10 +2,12 @@ package dev.bug.bankapp.aspect;
 
 import dev.bug.bankapp.model.Account;
 import dev.bug.bankapp.model.AccountHistory;
-import dev.bug.bankapp.model.AccountHistory.AccountOperation;
+import dev.bug.bankapp.model.AccountOperation;
 import dev.bug.bankapp.repositories.AccountHistoryRepository;
 import dev.bug.bankapp.repositories.AccountRepository;
-import dev.bug.bankapp.rest.requests.Transfer;
+import dev.bug.bankapp.dto.TransferReqDto;
+import dev.bug.bankapp.services.AccountService;
+import dev.bug.bankapp.services.ReportService;
 import lombok.SneakyThrows;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,6 +29,9 @@ public class AccountHistoryAspect {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private ReportService reportService;
+
     @SneakyThrows
     private void beforeHistory(AccountHistory accountHistory, String accountNumber) {
         if (accountRepository.existsByAccountNumber(accountNumber)) {
@@ -44,11 +49,10 @@ public class AccountHistoryAspect {
     }
 
     @SneakyThrows
-    @Around("execution(* dev.bug.bankapp.rest.AccountController.*(dev.bug.bankapp.rest.requests.Transfer)) && args(data)")
-    public Object logAfterReturning(ProceedingJoinPoint joinPoint, Object data) {
+    @Around("execution(* dev.bug.bankapp.web.AccountController.*(dev.bug.bankapp.dto.TransferReqDto)) && args(data)")
+    public void logHistory(ProceedingJoinPoint joinPoint, Object data) {
         AccountOperation operation = AccountOperation.valueOf(joinPoint.getSignature().getName().toUpperCase());
-        Transfer transfer = (Transfer) data;
-        Object proceed = null;
+        operation.proceed(joinPoint, (TransferReqDto) data, reportService);
 
         switch (operation) {
             case DEPOSIT: {

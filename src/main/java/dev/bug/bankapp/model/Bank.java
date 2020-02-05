@@ -23,9 +23,16 @@ public class Bank {
     @ApiModelProperty("Идентефикатор банка")
     private long bankId;
 
+    @ApiModelProperty("Название банка")
+    private String name;
+
     @OneToMany(mappedBy = "bank")
     @ApiModelProperty("Список клиентов")
     private List<Client> clients = new ArrayList<>();
+
+    public Bank(String name) {
+        this.name = name;
+    }
 
     public Bank addClient(Client client) {
         this.clients.add(client);

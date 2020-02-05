@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class InBankNotFoundClientsException extends BankException {
+public class ClientsNotFoundException extends BankException {
 
-    public InBankNotFoundClientsException(ErrorMessageProvider errorMessageProvider, long bankId) {
-        super(errorMessageProvider.getInBankNotFoundClients(), bankId);
+    public ClientsNotFoundException(ErrorMessageProvider errorMessageProvider, long bankId) {
+        super(errorMessageProvider.getClientsNotFound(), bankId);
     }
 }

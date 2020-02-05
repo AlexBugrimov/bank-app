@@ -6,4 +6,5 @@ import lombok.Data;
 public class BankDto {
 
     private long bankId;
+    private String name;
 }

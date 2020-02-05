@@ -1,6 +1,6 @@
 package dev.bug.bankapp.dto;
 
-import dev.bug.bankapp.model.AccountHistory;
+import dev.bug.bankapp.model.AccountOperation;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class AccountHistoryDto {
 
     private AccountDto account;
-    private AccountHistory.AccountOperation operation;
+    private AccountOperation operation;
     private LocalDateTime time;
     private double balanceBefore;
     private double balanceAfter;

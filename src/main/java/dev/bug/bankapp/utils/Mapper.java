@@ -43,11 +43,11 @@ public class Mapper {
                 .setClient(clientTo(account.getClient()));
     }
 
-    public TransferDto transferTo(Account creditAccount, Account debitedAccount, double amount) {
+    public TransferDto transferTo(AccountDto creditAccount, AccountDto debitedAccount, double amount) {
         return new TransferDto()
                 .setAmount(amount)
-                .setCreditAccount(accountTo(creditAccount))
-                .setDebitAccount(accountTo(debitedAccount));
+                .setCreditAccount(creditAccount)
+                .setDebitAccount(debitedAccount);
     }
 
     public List<AccountHistoryDto> accountHistoriesTo(List<AccountHistory> accountHistories) {
