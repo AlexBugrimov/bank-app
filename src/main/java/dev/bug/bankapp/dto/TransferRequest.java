@@ -3,8 +3,9 @@ package dev.bug.bankapp.dto;
 import lombok.Data;
 
 @Data
-public class TransferReqDto {
+public class TransferRequest {
 
+    private long idTransfer;
     private String creditAccountNumber;
     private String debitAccountNumber;
     private double amount;

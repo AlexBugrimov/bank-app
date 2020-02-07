@@ -2,7 +2,7 @@ package dev.bug.bankapp.services;
 
 import dev.bug.bankapp.dto.AccountDto;
 import dev.bug.bankapp.dto.TransferDto;
-import dev.bug.bankapp.dto.TransferReqDto;
+import dev.bug.bankapp.dto.TransferRequest;
 import dev.bug.bankapp.exceptions.AccountNotFoundException;
 import dev.bug.bankapp.exceptions.ClientNotFoundException;
 import dev.bug.bankapp.exceptions.NotEnoughFundsException;
@@ -32,7 +32,7 @@ public class AccountService extends ApiService {
         return mapper.accountsTo(accounts);
     }
 
-    public AccountDto withdraw(TransferReqDto transfer) {
+    public AccountDto withdraw(TransferRequest transfer) {
         String accountNumber = transfer.getCreditAccountNumber();
         Account account = accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new AccountNotFoundException(messageProvider, accountNumber));
@@ -43,7 +43,7 @@ public class AccountService extends ApiService {
         return mapper.accountTo(accountRepository.save(account.withdraw(amount)));
     }
 
-    public AccountDto deposit(TransferReqDto transfer) {
+    public AccountDto deposit(TransferRequest transfer) {
         String accountNumber = transfer.getDebitAccountNumber();
         Account account = accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new AccountNotFoundException(messageProvider, accountNumber));
@@ -51,7 +51,7 @@ public class AccountService extends ApiService {
         return mapper.accountTo(accountRepository.save(account.deposit(amount)));
     }
 
-    public TransferDto transfer(TransferReqDto transfer) {
+    public TransferDto transfer(TransferRequest transfer) {
         return mapper.transferTo(withdraw(transfer), deposit(transfer), transfer.getAmount());
     }
 

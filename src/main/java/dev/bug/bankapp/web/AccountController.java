@@ -2,7 +2,7 @@ package dev.bug.bankapp.web;
 
 import dev.bug.bankapp.dto.AccountDto;
 import dev.bug.bankapp.dto.TransferDto;
-import dev.bug.bankapp.dto.TransferReqDto;
+import dev.bug.bankapp.dto.TransferRequest;
 import dev.bug.bankapp.services.AccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +24,7 @@ public class AccountController {
 
     @PostMapping("withdraw")
     @ApiOperation(value = "Списать со счета", response = AccountDto.class)
-    public ResponseEntity<AccountDto> withdraw(@RequestBody TransferReqDto transfer) {
+    public ResponseEntity<AccountDto> withdraw(@RequestBody TransferRequest transfer) {
         AccountDto accountDto = accountService.withdraw(transfer);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -33,7 +33,7 @@ public class AccountController {
 
     @PostMapping("deposit")
     @ApiOperation(value = "Пополнить счет", response = AccountDto.class)
-    public ResponseEntity<AccountDto> deposit(@RequestBody TransferReqDto transfer) {
+    public ResponseEntity<AccountDto> deposit(@RequestBody TransferRequest transfer) {
         AccountDto accountDto = accountService.deposit(transfer);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -42,7 +42,7 @@ public class AccountController {
 
     @PostMapping("transfer")
     @ApiOperation(value = "Перевести со счета на счет", response = TransferDto.class)
-    public ResponseEntity<TransferDto> transfer(@RequestBody TransferReqDto transfer) {
+    public ResponseEntity<TransferDto> transfer(@RequestBody TransferRequest transfer) {
         TransferDto transferDto = accountService.transfer(transfer);
         return ResponseEntity
                 .status(HttpStatus.OK)
