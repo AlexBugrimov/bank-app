@@ -26,14 +26,13 @@ public class AccountHistoryAspect {
     public Object logHistory(ProceedingJoinPoint joinPoint, Object data) {
         AccountOperation operation = AccountOperation.valueOf(joinPoint.getSignature().getName().toUpperCase());
         TransferRequest transfer = (TransferRequest) data;
+        AccountHistory history = new AccountHistory(operation);
 
-        AccountHistory accountHistory = new AccountHistory();
-
-        operation.toDo(reportService.recordBefore(transfer, accountHistory));   // Считывание счетов
+        reportService.executeBefore(transfer, history);
 
         Object proceed = joinPoint.proceed();
 
-        operation.toDo(reportService.recordAfter(transfer, accountHistory));    // Запись счетов
+        reportService.executeAfter(transfer, history);
 
         return proceed;
     }

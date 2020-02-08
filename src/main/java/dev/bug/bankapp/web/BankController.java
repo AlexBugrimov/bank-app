@@ -27,8 +27,8 @@ public class BankController {
     @ApiOperation(value = "Создать банк", response = Bank.class)
     public ResponseEntity<BankDto> createBank(
             @ApiParam(value = "Название банка", required = true, example = "Сбер Банк")
-            @RequestBody String name) {
-        BankDto bankDto = bankService.createBank(name);
+            @RequestBody Bank bank) {
+        BankDto bankDto = bankService.createBank(bank);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(bankDto);

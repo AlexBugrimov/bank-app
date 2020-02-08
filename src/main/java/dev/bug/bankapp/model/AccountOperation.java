@@ -1,28 +1,9 @@
 package dev.bug.bankapp.model;
 
-import dev.bug.bankapp.dto.AccountHistoryDto;
-import dev.bug.bankapp.dto.TransferRequest;
-import dev.bug.bankapp.services.ReportService;
-
 public enum AccountOperation {
 
-    WITHDRAW {
-//        @Override
-//        public AccountHistory executeBefore(ReportService reportService, TransferRequest transfer) {
-//            return reportService.recordBefore(transfer.getDebitAccountNumber(), new AccountHistory(this));
-//        }
-//        public AccountHistoryDto executeAfter(ReportService reportService, AccountHistory accountHistory) {
-//            return reportService.recordAfter(accountHistory);
-//        }
-    }, DEPOSIT {
-//        @Override
-//        public AccountHistory executeBefore(ReportService reportService, TransferRequest transfer)  {
-//            return reportService.recordBefore(transfer.getCreditAccountNumber(), new AccountHistory(this));
-//        }
-//        public AccountHistoryDto executeAfter(ReportService reportService, AccountHistory accountHistory) {
-//            return reportService.recordAfter(accountHistory);
-//        }
-    }, TRANSFER {
+    WITHDRAW, DEPOSIT, TRANSFER
+
 //        @Override
 //        public AccountHistory executeBefore(ReportService reportService, TransferRequest transfer) {
 //            AccountHistory debitAccountHistory = reportService
@@ -47,13 +28,12 @@ public enum AccountOperation {
 //            accountHistoryRepository.save(creditAccountHistory);
 //            accountHistoryRepository.save(debitAccountHistory);
 //        }
-    };
-
+}
 
 
 //    public abstract AccountHistory executeBefore(ReportService reportService, TransferRequest transfer);
 //    public abstract AccountHistoryDto executeAfter(ReportService reportService, AccountHistory accountHistory);
-}
+
 
 /*
 

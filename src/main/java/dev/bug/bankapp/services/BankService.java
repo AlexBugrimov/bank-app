@@ -25,9 +25,8 @@ public class BankService extends ApiService {
     @Autowired
     private ClientRepository clientRepository;
 
-    public BankDto createBank(String name) {
-        Bank bank = bankRepository.save(new Bank().setName(name));
-        return mapper.bankTo(bank);
+    public BankDto createBank(Bank bank) {
+        return mapper.bankTo(bankRepository.save(bank));
     }
 
     public List<String> getClientNames(long bankId) {

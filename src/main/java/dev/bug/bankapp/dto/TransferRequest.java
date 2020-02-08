@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class TransferRequest {
 
-    private long idTransfer;
     private String creditAccountNumber;
     private String debitAccountNumber;
     private double amount;

@@ -33,6 +33,7 @@ public class Mapper {
 
     public BankDto bankTo(Bank bank) {
         return new BankDto()
+                .setName(bank.getName())
                 .setBankId(bank.getBankId());
     }
 
@@ -56,7 +57,7 @@ public class Mapper {
                 .collect(Collectors.toList());
     }
 
-    private AccountHistoryDto accountHistoryTo(AccountHistory accountHistory) {
+    public AccountHistoryDto accountHistoryTo(AccountHistory accountHistory) {
         return (accountHistory == null) ? null : new AccountHistoryDto()
                 .setAccount(accountTo(accountHistory.getAccount()))
                 .setBalanceBefore(accountHistory.getBalanceBefore())
