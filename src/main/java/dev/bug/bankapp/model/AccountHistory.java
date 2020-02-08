@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class AccountHistory {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long accountHistoryId;
 
     @ManyToOne
@@ -23,7 +23,7 @@ public class AccountHistory {
     @Enumerated(EnumType.STRING)
     private AccountOperation operation;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime time;
 
     private double balanceBefore;
@@ -33,9 +33,8 @@ public class AccountHistory {
     @ManyToOne
     private Account transferFrom;
 
-    @SneakyThrows
-    public AccountHistory doJoinPoint(ProceedingJoinPoint joinPoint) {
-        joinPoint.proceed();
-        return this;
+
+    public AccountHistory(AccountOperation operation) {
+       this.operation = operation;
     }
 }

@@ -1,26 +1,58 @@
 package dev.bug.bankapp.model;
 
+import dev.bug.bankapp.dto.AccountHistoryDto;
 import dev.bug.bankapp.dto.TransferRequest;
 import dev.bug.bankapp.services.ReportService;
 
 public enum AccountOperation {
 
     WITHDRAW {
-        @Override
-        public void toDo(TransferRequest transfer, AccountHistory accountHistory ) {
-            reportService.recordBefore(transfer, this);
-        }
+//        @Override
+//        public AccountHistory executeBefore(ReportService reportService, TransferRequest transfer) {
+//            return reportService.recordBefore(transfer.getDebitAccountNumber(), new AccountHistory(this));
+//        }
+//        public AccountHistoryDto executeAfter(ReportService reportService, AccountHistory accountHistory) {
+//            return reportService.recordAfter(accountHistory);
+//        }
     }, DEPOSIT {
-        @Override
-        public void toDo(TransferRequest transfer, AccountHistory accountHistory ) {
-        }
+//        @Override
+//        public AccountHistory executeBefore(ReportService reportService, TransferRequest transfer)  {
+//            return reportService.recordBefore(transfer.getCreditAccountNumber(), new AccountHistory(this));
+//        }
+//        public AccountHistoryDto executeAfter(ReportService reportService, AccountHistory accountHistory) {
+//            return reportService.recordAfter(accountHistory);
+//        }
     }, TRANSFER {
-        @Override
-        public void toDo(TransferRequest transfer, AccountHistory accountHistory ) {
-        }
+//        @Override
+//        public AccountHistory executeBefore(ReportService reportService, TransferRequest transfer) {
+//            AccountHistory debitAccountHistory = reportService
+//                    .recordBefore(transfer.getDebitAccountNumber(), new AccountHistory(this));
+//            AccountHistory creditAccountHistory = reportService
+//                    .recordBefore(transfer.getCreditAccountNumber(), new AccountHistory(this));
+//
+//            reportService
+//                    .recordBefore();
+//
+//            String creditAccountNumber = transfer.getCreditAccountNumber();
+//            String debitAccountNumber = transfer.getDebitAccountNumber();
+//
+//            beforeHistory(creditAccountHistory, creditAccountNumber);
+//            beforeHistory(debitAccountHistory, debitAccountNumber);
+//
+//            proceed = joinPoint.proceed();
+//
+//            afterHistory(creditAccountHistory, creditAccountNumber, debitAccountNumber);
+//            afterHistory(debitAccountHistory, debitAccountNumber, creditAccountNumber);
+//
+//            accountHistoryRepository.save(creditAccountHistory);
+//            accountHistoryRepository.save(debitAccountHistory);
+//        }
     };
 
-    public abstract void toDo(TransferRequest transfer, AccountHistory accountHistory );
+
+
+//    public abstract AccountHistory executeBefore(ReportService reportService, TransferRequest transfer);
+//    public abstract AccountHistoryDto executeAfter(ReportService reportService, AccountHistory accountHistory);
 }
 
 /*
