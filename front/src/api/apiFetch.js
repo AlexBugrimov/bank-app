@@ -1,9 +1,10 @@
-export default async function createBank() {
-    const response = await fetch('/api/v1/banks', {
+
+export async function postData(url = '', data = {}) {
+    return await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        }
-    });
-    return await response.json();
+        },
+        body: JSON.stringify(data)
+    }).then(response => response.json());
 }

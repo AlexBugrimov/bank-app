@@ -1,27 +1,22 @@
 import React, {PureComponent} from 'react';
 import {Container} from "react-bootstrap";
-import createBank from "../api/apiFetch";
-import Button from "react-bootstrap/Button";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Banks from './Banks';
 
 class App extends PureComponent {
 
     constructor(props) {
         super(props);
         this.state = {
-            bank: {}
+            banks: {}
         }
     }
 
    render() {
-        const { bank : { bankId } } = this.state;
+        const { banks } = this.state;
        return <div className="App">
            <Container>
-               <Button
-                   variant='success'
-                    onClick={() => createBank().then( bank => this.setState({ bank }))}
-               >Создать банк</Button>
-               {bankId}
+               <Banks banks={banks} />
            </Container>
        </div>
    }
