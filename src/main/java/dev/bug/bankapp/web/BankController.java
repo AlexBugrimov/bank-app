@@ -15,9 +15,7 @@ import java.util.List;
 
 @Api("Banks")
 @RestController
-@RequestMapping(value = "banks",
-        produces = "application/json",
-        consumes = "application/json")
+@RequestMapping(value = "banks")
 public class BankController {
 
     @Autowired

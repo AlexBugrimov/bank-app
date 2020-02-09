@@ -19,9 +19,6 @@ spring:
   hateoas:
     use-hal-as-default-json-media-type: false
 
-server:
-  port: 0
-
 error-messages:
   bankNotExists: Банка с id:{0} не существует
   clientExists: Клиент с именем {0} уже зарегистрирован в банке
