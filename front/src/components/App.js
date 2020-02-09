@@ -7,16 +7,12 @@ class App extends PureComponent {
 
     constructor(props) {
         super(props);
-        this.state = {
-            banks: {}
-        }
     }
 
    render() {
-        const { banks } = this.state;
        return <div className="App">
            <Container>
-               <Banks banks={banks} />
+               <Banks/>
            </Container>
        </div>
    }
