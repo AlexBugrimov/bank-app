@@ -17,16 +17,16 @@ export default () => {
             ...banks,
             await createNewBank(bank)
         ]);
-        setBank({ name: '' } );
+        setBank({name: ''});
     };
 
     const getBanks = async () => {
         const allBanks = await getAllBanks();
-        setBanks( [...allBanks]);
+        setBanks([...allBanks]);
         setIsLoad(false);
     };
 
-    const handleChange = ( { target: { value } } ) => {
+    const handleChange = ({target: {value}}) => {
         setBank({
             name: value
         });
@@ -36,7 +36,11 @@ export default () => {
         getBanks().then(r => console.log('Banks is loaded...'));
     }, [isLoad]);
 
-    return (
+    const getSpinner = () => <Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+    </Spinner>;
+
+    return (<>
         <div><h3>Banks</h3>
             <Form>
                 <Form.Group controlId="formBanks">
@@ -53,11 +57,10 @@ export default () => {
                     type='submit'
                 >Создать банк</Button>
             </Form>
-            {isLoad ? <Spinner animation="border" role="status">
-                <span className="sr-only">Loading...</span>
-            </Spinner> : <div className="Cards">
-                {banks.map(( { bankId, name } ) => <Bank key={bankId} bankId={bankId} name={name} />)}
+            {isLoad ? getSpinner() : <div className="Cards">
+                {banks.map(({bankId, name}) => <Bank key={bankId} bankId={bankId} name={name}/>)}
             </div>}
         </div>
+        </>
     )
 }
