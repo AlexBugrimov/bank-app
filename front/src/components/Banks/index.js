@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import Button from "react-bootstrap/Button";
 import {createNewBank, getAllBanks} from "./actions";
 import Form from "react-bootstrap/Form";
-import Card from "react-bootstrap/Card";
 import './Banks.css';
 import Spinner from "react-bootstrap/Spinner";
+import Bank from './Bank';
 
 export default () => {
     const [banks, setBanks] = useState([]);
@@ -16,19 +16,20 @@ export default () => {
         bank.name && setBanks([
             ...banks,
             await createNewBank(bank)
-        ])
-    };
-
-    const handleChange = (e) => {
-        setBank({
-            name: e.target.value
-        })
+        ]);
+        setBank({ name: '' } );
     };
 
     const getBanks = async () => {
         const allBanks = await getAllBanks();
         setBanks( [...allBanks]);
         setIsLoad(false);
+    };
+
+    const handleChange = ( { target: { value } } ) => {
+        setBank({
+            name: value
+        });
     };
 
     useEffect(() => {
@@ -41,6 +42,7 @@ export default () => {
                 <Form.Group controlId="formBanks">
                     <Form.Label>Банк</Form.Label>
                     <Form.Control
+                        value={bank.name}
                         type="text"
                         placeholder="Введите название банка"
                         onChange={handleChange}/>
@@ -54,13 +56,7 @@ export default () => {
             {isLoad ? <Spinner animation="border" role="status">
                 <span className="sr-only">Loading...</span>
             </Spinner> : <div className="Cards">
-                {banks && banks.map(({bankId, name}) => <Card key={bankId} className="Card" style={{width: '18rem'}}
-                                                              border={"success"}>
-                    <Card.Body>
-                        <Card.Title className="Card__title">{name}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">Идентефикатор: {bankId}</Card.Subtitle>
-                    </Card.Body>
-                </Card>)}
+                {banks.map(( { bankId, name } ) => <Bank key={bankId} bankId={bankId} name={name} />)}
             </div>}
         </div>
     )
