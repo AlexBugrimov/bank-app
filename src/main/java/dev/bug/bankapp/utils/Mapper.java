@@ -66,4 +66,10 @@ public class Mapper {
                 .setTime(accountHistory.getTime())
                 .setTransferFrom(accountTo(accountHistory.getTransferFrom()));
     }
+
+    public List<BankDto> banksTo(List<Bank> banks) {
+        return banks.stream()
+                .map(this::bankTo)
+                .collect(Collectors.toList());
+    }
 }
