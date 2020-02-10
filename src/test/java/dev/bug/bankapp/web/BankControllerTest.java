@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.bug.bankapp.dto.BankDto;
 import dev.bug.bankapp.model.Bank;
 import dev.bug.bankapp.services.BankService;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -13,19 +12,20 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultMatcher;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BankController.class)
 class BankControllerTest {
@@ -79,4 +79,17 @@ class BankControllerTest {
                 .isEqualTo(1);
     }
 
+    @Test
+    public void getAllBanksTest() throws Exception {
+        List<BankDto> banks = Arrays.asList(
+                new BankDto().setName("VTB"),
+                new BankDto().setName("Sb-Bank"),
+                new BankDto().setName("Alpha")
+        );
+        when(bankService.getBanks()).thenReturn(banks);
+
+        mockMvc.perform(get("/banks"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$", hasSize(3)));
+    }
 }
