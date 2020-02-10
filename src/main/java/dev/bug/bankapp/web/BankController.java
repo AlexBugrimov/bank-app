@@ -42,4 +42,12 @@ public class BankController {
                 .status(HttpStatus.OK)
                 .body(clientNames);
     }
+
+    @GetMapping
+    public ResponseEntity<List<BankDto>> getBanks() {
+        List<BankDto> banks = bankService.getBanks();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(banks);
+    }
 }

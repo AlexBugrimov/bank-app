@@ -29,6 +29,10 @@ public class BankService extends ApiService {
         return mapper.bankTo(bankRepository.save(bank));
     }
 
+    public List<BankDto> getBanks() {
+        return mapper.banksTo(bankRepository.findAll());
+    }
+
     public List<String> getClientNames(long bankId) {
         if (!bankRepository.existsById(bankId)) {
             throw new BankNotExistsException(messageProvider, bankId);
