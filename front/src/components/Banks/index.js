@@ -5,8 +5,10 @@ import Form from "react-bootstrap/Form";
 import './Banks.css';
 import Spinner from "react-bootstrap/Spinner";
 import Bank from './Bank';
+import {connect} from 'react-redux';
+import {setBanks} from "../../actions/banks";
 
-export default () => {
+const Banks = () => {
     const [banks, setBanks] = useState([]);
     const [bank, setBank] = useState({name: ''});
     const [isLoad, setIsLoad] = useState(true);
@@ -63,4 +65,14 @@ export default () => {
         </div>
         </>
     )
-}
+};
+
+const mapStateToProps = state => ({
+   ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+    setBanks: banks => dispatch(setBanks(banks))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Banks);
