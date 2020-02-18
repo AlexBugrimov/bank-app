@@ -1,78 +1,36 @@
-import React, {useEffect, useState} from 'react';
-import Button from "react-bootstrap/Button";
-import {createNewBank, getAllBanks} from "./actions";
-import Form from "react-bootstrap/Form";
+import React, {useEffect, useReducer} from 'react';
 import './Banks.css';
 import Spinner from "react-bootstrap/Spinner";
-import Bank from './Bank';
-import {connect} from 'react-redux';
-import {setBanks} from "../../actions/banks";
+import reducer from './../../redusers/banks'
+import initialState from './../../redusers/banks'
 
 const Banks = () => {
-    const [banks, setBanks] = useState([]);
-    const [bank, setBank] = useState({name: ''});
-    const [isLoad, setIsLoad] = useState(true);
-
-    const createBank = async (e) => {
-        e.preventDefault();
-        bank.name && setBanks([
-            ...banks,
-            await createNewBank(bank)
-        ]);
-        setBank({name: ''});
-    };
-
-    const getBanks = async () => {
-        const allBanks = await getAllBanks();
-        setBanks([...allBanks]);
-        setIsLoad(false);
-    };
-
-    const handleChange = ({target: {value}}) => {
-        setBank({
-            name: value
+    const [state, dispatch] = useReducer(reducer, initialState);
+    useEffect(async () => {
+        const response = await fetch('/api/v1/banks', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
         });
-    };
+        const banks = await response.json();
+        console.log(banks)
+        return dispatch({type: 'FETCH_SUCCESS_BANKS', payload: banks});
 
-    useEffect(() => {
-        getBanks().then(r => console.log('Banks is loaded...'));
-    }, [isLoad]);
 
-    const getSpinner = () => <Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
-    </Spinner>;
+    }, []);
+// dispatch({ type: 'FETCH_SUCCESS_BANKS', payload: response.json()});)
+//     const spinner = () => <Spinner animation="border" role="status">
+//         <span className="sr-only">Loading...</span>
+//     </Spinner>;
 
     return (<>
-        <div><h3>Banks</h3>
-            <Form>
-                <Form.Group controlId="formBanks">
-                    <Form.Label>Банк</Form.Label>
-                    <Form.Control
-                        value={bank.name}
-                        type="text"
-                        placeholder="Введите название банка"
-                        onChange={handleChange}/>
-                </Form.Group>
-                <Button
-                    variant='success'
-                    onClick={createBank}
-                    type='submit'
-                >Создать банк</Button>
-            </Form>
-            {isLoad ? getSpinner() : <div className="Cards">
-                {banks.map(({bankId, name}) => <Bank key={bankId} bankId={bankId} name={name}/>)}
-            </div>}
-        </div>
+            <div><h3>Banks</h3>
+                {/*{<div className="Cards">*/}
+                {/*    {state.banks ? spinner : state.banks.map(({bankId, name}) => <Bank key={bankId} bankId={bankId} name={name}/>)}*/}
+                {/*</div>}*/}
+            </div>
         </>
     )
 };
-
-const mapStateToProps = state => ({
-   ...state
-});
-
-const mapDispatchToProps = dispatch => ({
-    setBanks: banks => dispatch(setBanks(banks))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Banks);
+export default Banks;

@@ -1,20 +1,31 @@
 const initialState = {
-    banks: [],
+    loading: true,
+    error: null,
+    banks: []
 };
 
-export default (state = initialState, action) => {
-    switch (action.type) {
-        case 'SET_BANKS':
+export default (state = initialState, {type, payload}) => {
+    switch (type) {
+        case 'FETCH_SUCCESS_BANKS':
             return {
                 ...state,
-                banks: action.payload
+                banks: payload,
+                loading: false,
+                error: null
             };
-        case 'ADD_BANK':
+        case 'FETCH_ERROR_BANKS':
+            return {
+                ...state,
+                banks: [],
+                loading: false,
+                error: 'Fetch error banks'
+            };
+        case 'SUCCESS_ADD_BANK':
             return {
                 ...state,
                 banks: [
                     ...state.banks,
-                    action.payload
+                    payload
                 ]
             };
         default:

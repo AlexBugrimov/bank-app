@@ -9,11 +9,12 @@ export async function postData(url = '', data = {}) {
     }).then(response => response.json());
 }
 
-export async function getAllData(url = '') {
-    return await fetch(url, {
+export async function  getAllData(url = '') {
+    const responsePromise = await fetch('/api/v1/banks', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         },
-    }).then(response => response.json());
+    });
+    return responsePromise;
 }

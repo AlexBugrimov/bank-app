@@ -6,18 +6,6 @@ import {Provider} from 'react-redux';
 import createStore from "./store";
 const store = createStore();
 
-setTimeout(function () {
-    store.dispatch({
-        type: 'SET_BANKS',
-        payload: [
-            {
-                id: 0,
-                name: 'VTB'
-            }
-        ]
-    })
-}, 1000);
-
 render(
     <Provider store={store}>
         <App/>
