@@ -5,7 +5,6 @@ import Banks from './Banks';
 import Header from "./Header";
 
 export default () => {
-
     return <div className="App">
         <Header/>
         <Container>

@@ -4,12 +4,15 @@ const initialState = {
     banks: []
 };
 
-export default (state = initialState, {type, payload}) => {
-    switch (type) {
+export default (state = initialState, action) => {
+    console.log('STATE', state);
+    // console.log('type', type);
+    // console.log('payload', payload);
+    switch (action.type) {
         case 'FETCH_SUCCESS_BANKS':
             return {
                 ...state,
-                banks: payload,
+                banks: action.payload,
                 loading: false,
                 error: null
             };
@@ -25,7 +28,7 @@ export default (state = initialState, {type, payload}) => {
                 ...state,
                 banks: [
                     ...state.banks,
-                    payload
+                    action.payload
                 ]
             };
         default:
